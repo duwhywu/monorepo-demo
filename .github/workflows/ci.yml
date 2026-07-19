@@ -1,15 +1,12 @@
-# .gitee/workflows/ci.yml
 name: CI/CD
 
-# 触发条件：推送或 PR 到 master 分支
 on:
   push:
-    branches: [master]
+    branches: [main, master]
   pull_request:
-    branches: [master]
+    branches: [main, master]
 
 jobs:
-  # 测试任务
   test:
     runs-on: ubuntu-latest
     
@@ -25,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.22.3
+          node-version: 20
           cache: 'pnpm'
       
       - name: Install dependencies
@@ -33,7 +30,3 @@ jobs:
       
       - name: Build all packages
         run: pnpm build:all
-      
-      # 如果有测试脚本，取消注释
-      # - name: Run tests
-      #   run: pnpm -r test
