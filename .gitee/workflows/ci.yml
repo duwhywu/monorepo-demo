@@ -1,0 +1,39 @@
+# .gitee/workflows/ci.yml
+name: CI/CD
+
+# 触发条件：推送或 PR 到 master 分支
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  # 测试任务
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.3
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build all packages
+        run: pnpm build:all
+      
+      # 如果有测试脚本，取消注释
+      # - name: Run tests
+      #   run: pnpm -r test
