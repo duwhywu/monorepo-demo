@@ -48,4 +48,6 @@ jobs:
             git pull origin master
             pnpm install --frozen-lockfile
             pnpm build:all
+            chmod +x setup-nginx.sh
+            sudo ./setup-nginx.sh
             echo "部署完成！"
